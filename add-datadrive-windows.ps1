@@ -1,20 +1,14 @@
-# Check if the D: drive is already provisioned
-if (Get-Volume -DriveLetter D -ErrorAction SilentlyContinue) {
-    Write-Output "D: drive is already provisioned. Exiting script."
-    exit
-}
+ $disks = Get-Disk | Where partitionstyle -eq 'raw' | sort number
 
-# Initialize variables
-$DataDisk = Get-Disk | Where-Object { $_.PartitionStyle -eq 'RAW' }
-$Volume = Get-Partition -DiskNumber $DataDisk.Number | Where-Object { $_.DriveLetter -eq $null }
+    $letters = 70..89 | ForEach-Object { [char]$_ }
+    $count = 0
+    $labels = "data1","data2"
 
-# Format the data disk
-$Volume | Format-Volume -FileSystem NTFS -NewFileSystemLabel "Data" -Confirm:$false
-
-# Assign a drive letter to the data disk
-$Volume | Add-PartitionAccessPath -AccessPath "D:\" -AssignDriveLetter
-
-# Persist the drive letter assignment
-Set-Partition -DriveLetter "D" -NewDriveLetter "D" -Confirm:$false
-
-Write-Output "Data disk formatted and assigned to D: drive."
+    foreach ($disk in $disks) {
+        $driveLetter = $letters[$count].ToString()
+        $disk |
+        Initialize-Disk -PartitionStyle MBR -PassThru |
+        New-Partition -UseMaximumSize -DriveLetter $driveLetter |
+        Format-Volume -FileSystem NTFS -NewFileSystemLabel $labels[$count] -Confirm:$false -Force
+	$count++
+    }
