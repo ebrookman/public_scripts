@@ -3,6 +3,7 @@
 Write-Output "Starting setup..."
 
     # Change DVD drive letter to Z:
+    Write-Output "Changing CD-ROM from 'D' to 'Z'"
     $Drive = Get-CimInstance -ClassName Win32_Volume -Filter "DriveLetter = 'D:'"
     $Drive | Set-CimInstance -Property @{DriveLetter ='Z:'}
 
