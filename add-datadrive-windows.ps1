@@ -4,8 +4,8 @@ Write-Output "Starting setup..."
 
     # Change DVD drive letter to Z:
     #$dvdDrive = Get-WmiObject -Query "SELECT * FROM Win32_CDROMDrive" | Select-Object -First 1
-            Write-Output "Changing DVD drive letter from D: to Z:"
-            Set-Partition -DriveLetter D -NewDriveLetter Z
+          #  Write-Output "Changing DVD drive letter from D: to Z:"
+          #  Set-Partition -DriveLetter D -NewDriveLetter Z
 
 
     # Initialize data drives
