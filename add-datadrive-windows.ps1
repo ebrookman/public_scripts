@@ -4,16 +4,10 @@ Write-Output "Starting setup..."
 
 try {
     # Change DVD drive letter to Z:
-    $dvdDrive = Get-WmiObject -Query "SELECT * FROM Win32_CDROMDrive" | Select-Object -First 1
-    if ($dvdDrive) {
-        $dvdDriveLetter = $dvdDrive.Drive.Substring(0, 2)  # Extract the current drive letter (e.g., 'D:')
-        $volume = Get-Volume -DriveLetter $dvdDriveLetter
-        if ($volume) {
-            Write-Output "Changing DVD drive letter from $dvdDriveLetter to Z:"
-            Set-Partition -DriveLetter $dvdDriveLetter -NewDriveLetter Z
-        } else {
-            Write-Output "No volume found for DVD drive letter $dvdDriveLetter"
-        }
+    #$dvdDrive = Get-WmiObject -Query "SELECT * FROM Win32_CDROMDrive" | Select-Object -First 1
+            Write-Output "Changing DVD drive letter from D: to Z:"
+            Set-Partition -DriveLetter D -NewDriveLetter Z
+       
     } else {
         Write-Output "No DVD drive found"
     }
@@ -28,7 +22,7 @@ try {
         $driveLetter = $letters[$count].ToString()
         Write-Output "Initializing disk number $($disk.Number) with drive letter $driveLetter"
         $disk |
-        Initialize-Disk -PartitionStyle MBR -PassThru |
+        Initialize-Disk -PartitionStyle GPT -PassThru |
         New-Partition -UseMaximumSize -DriveLetter $driveLetter |
         Format-Volume -FileSystem NTFS -NewFileSystemLabel $labels[$count] -Confirm:$false -Force
         $count++
