@@ -25,7 +25,3 @@ Write-Output "Starting setup..."
     }
 
     Write-Output "Setup complete."
-} catch {
-    Write-Output "An error occurred: $_"
-    throw
-}
