@@ -1,6 +1,6 @@
  $disks = Get-Disk | Where partitionstyle -eq 'raw' | sort number
 
-    $letters = 68..89 | ForEach-Object { [char]$_ }
+    $letters = 69..89 | ForEach-Object { [char]$_ }
     $count = 0
     $labels = "data1","data2"
 
