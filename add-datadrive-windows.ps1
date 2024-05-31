@@ -10,7 +10,7 @@ Write-Output "Starting setup..."
 
     # Initialize data drives
     $disks = Get-Disk | Where-Object partitionstyle -eq 'raw' | Sort-Object number
-    $letters = 68..87 | ForEach-Object { [char]$_ }
+    $letters = 69..87 | ForEach-Object { [char]$_ }
     $count = 0
     $labels = "data1","data2"
 
