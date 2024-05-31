@@ -7,7 +7,7 @@
     foreach ($disk in $disks) {
         $driveLetter = $letters[$count].ToString()
         $disk |
-        Initialize-Disk -PartitionStyle MBR -PassThru |
+        Initialize-Disk -PartitionStyle GPT -PassThru |
         New-Partition -UseMaximumSize -DriveLetter $driveLetter |
         Format-Volume -FileSystem NTFS -NewFileSystemLabel $labels[$count] -Confirm:$false -Force
 	$count++
