@@ -14,4 +14,7 @@ if (-not $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Adm
 }
 
 # If already running as administrator, execute the main script
-. $ScriptPath
+$scriptDirectory = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$scriptFullPath = Join-Path -Path $scriptDirectory -ChildPath $ScriptPath
+Write-Output "Running script with elevated privileges: $scriptFullPath"
+. $scriptFullPath
